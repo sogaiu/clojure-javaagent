@@ -12,5 +12,6 @@
   ;; port - integer as string
   (let [[^String pid port] args
         project-path (.getCanonicalPath (cji/file "."))
-        javaagent-path (str project-path "/target/clojure-javaagent-1.0.0.jar")]
+        javaagent-path (str project-path
+                         "/target/clj-javaagent-start-socket-repl.jar")]
     (.loadAgent (VirtualMachine/attach pid) javaagent-path (str port))))

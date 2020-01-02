@@ -6,12 +6,14 @@
             :key "mit"
             :year 2017}
   :dependencies [[org.clojure/clojure "1.8.0"]]
-  :plugins [[lein-jdk-tools "0.1.1"]] ; put tools.jar on the classpath
   ;; socket repl
   :jvm-opts ["-Dclojure.server.repl={:port 8237 :accept clojure.core.server/repl}"]
+  ;; for java <= 8, want tools.jar on path for execution...
+  :plugins [[lein-jdk-tools "0.1.1"]] ; XXX: :jar-exclusions not working :(
   :profiles {:start-socket-repl
-             {:main clojure-javaagent.start-socket-repl
-              :aot [clojure-javaagent.start-socket-repl]
+             {:aot [clojure-javaagent.start-socket-repl]
+              :jar-name "clj-javaagent-start-socket-repl.jar"
+              :main clojure-javaagent.start-socket-repl
               ;; Note the '_' instead of '-' since we're describing a java package
               :manifest {"Agent-Class" "clojure_javaagent.start_socket_repl"}}}
   :main clojure-javaagent.core)
