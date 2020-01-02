@@ -6,7 +6,6 @@
             :key "mit"
             :year 2017}
   :dependencies [[org.clojure/clojure "1.8.0"]]
-  :plugins [[lein-jdk-tools "0.1.1"]] ; put tools.jar on the classpath
   ;; socket repl
   :jvm-opts ["-Dclojure.server.repl={:port 8237 :accept clojure.core.server/repl}"]
   :profiles {:start-socket-repl
