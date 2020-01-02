@@ -29,7 +29,7 @@
       {:address "127.0.0.1"
        :name "instrument"
        :port port
-       :accept 'clojure-javaagent.cm/repl})
+       :accept 'clojure-javaagent.start-socket-repl/repl})
     ;; XXX: set system property for clojure.server.<name> if successful?
     (println "Finishing agentmain")
     nil))
