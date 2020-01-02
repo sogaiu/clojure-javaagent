@@ -1,28 +1,14 @@
 (ns clojure-javaagent.core
-  (:import [com.sun.tools.attach VirtualMachine]
-           [java.lang.management ManagementFactory])
-  (:require [clojure-javaagent.instrumentation :as inst]))
-
-(defn pid []
-  "PID of the running JVM"
-  (re-find #"\d+" (.getName (ManagementFactory/getRuntimeMXBean))))
-
-(defn load-instrumentation
-  "Load a javaagent from a jar file and attach it to this process"
-  [jar-path]
-  (.loadAgent (VirtualMachine/attach (pid)) jar-path))
+  (:require
+   [clojure.java.io :as cji])
+  (:import
+   [com.sun.tools.attach VirtualMachine]))
 
 (defn -main
   [& args]
-  (let [project-path   (.getCanonicalPath (clojure.java.io/file "."))
-        javaagent-path (str project-path "/target/instrumentation.jar")]
-
-    ; Attach the instrumentation javaagent to this process
-    (load-instrumentation javaagent-path)
-
-    ; Find the size of an object
-    (println "The size of a String is"
-             (.getObjectSize inst/instrumentation "Hello World")
-             "bytes")))
-
-
+  ;; pid - string
+  ;; port - integer as string
+  (let [[pid port] args
+        project-path (.getCanonicalPath (cji/file "."))
+        javaagent-path (str project-path "/target/clojure-javaagent-1.0.0.jar")]
+    (.loadAgent (VirtualMachine/attach pid) javaagent-path (str port))))

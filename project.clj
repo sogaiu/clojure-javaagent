@@ -7,10 +7,11 @@
             :year 2017}
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :plugins [[lein-jdk-tools "0.1.1"]] ; put tools.jar on the classpath
-  :profiles {:instrumentation
-             {:main clojure-javaagent.instrumentation
-              :aot [clojure-javaagent.instrumentation]
-              ; Note the '_' instead of '-' since we're describing a java package
-              :manifest {"Agent-Class" "clojure_javaagent.instrumentation"
-              :uberjar-name "instrumentation.jar"}}}
+  ;; socket repl
+  :jvm-opts ["-Dclojure.server.repl={:port 8237 :accept clojure.core.server/repl}"]
+  :profiles {:start-socket-repl
+             {:main clojure-javaagent.start-socket-repl
+              :aot [clojure-javaagent.start-socket-repl]
+              ;; Note the '_' instead of '-' since we're describing a java package
+              :manifest {"Agent-Class" "clojure_javaagent.start_socket_repl"}}}
   :main clojure-javaagent.core)
